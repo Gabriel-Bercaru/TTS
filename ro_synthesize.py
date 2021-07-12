@@ -6,10 +6,10 @@ import torch
 import json
 import string
 
-from TTS.utils.synthesis import synthesis
-from TTS.utils.generic_utils import load_config, setup_model
-from TTS.utils.text.symbols import make_symbols, symbols, phonemes
-from TTS.utils.audio import AudioProcessor
+from utils.synthesis import synthesis
+from utils.generic_utils import load_config, setup_model
+from utils.text.symbols import make_symbols, symbols, phonemes
+from utils.audio import AudioProcessor
 
 
 def tts(model,
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     #    help='Path to model file.',
     #)
     parser.add_argument(
-        'out_path',
+        '--out_path',
         type=str,
         help='Path to save final wav file. Wav file will be names as the text given.',
     )
@@ -200,7 +200,7 @@ if __name__ == "__main__":
         ap_vocoder = None
 
     # synthesize voice
-    print(" > Text: {}".format(text))
+    print(" > Text: {}".format(text.encode('UTF-8')))
     _, _, _, wav = tts(model,
                        vocoder_model,
                        C,
@@ -220,6 +220,6 @@ if __name__ == "__main__":
         file_name = 'wavernn_' + text.replace(" ", "_") + '.wav'
     else:
         file_name = 'gl_' + text.replace(" ", "_") + '.wav'
-    out_path = os.path.join(args.out_path, file_name)
+    out_path = args.out_path
     print(" > Saving output to {}".format(out_path))
     ap.save_wav(wav, out_path)

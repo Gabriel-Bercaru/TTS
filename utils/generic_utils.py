@@ -19,7 +19,7 @@ class AttrDict(dict):
 
 def load_config(config_path):
     config = AttrDict()
-    with open(config_path, "r") as f:
+    with open(config_path, "r", encoding='UTF-8') as f:
         input_str = f.read()
     input_str = re.sub(r'\\\n', '', input_str)
     input_str = re.sub(r'//.*\n', '\n', input_str)
@@ -280,7 +280,7 @@ def set_init_dict(model_dict, checkpoint, c):
 
 def setup_model(num_chars, num_speakers, c):
     print(" > Using model: {}".format(c.model))
-    MyModel = importlib.import_module('TTS.models.' + c.model.lower())
+    MyModel = importlib.import_module('models.' + c.model.lower())
     MyModel = getattr(MyModel, c.model)
     if c.model.lower() in "tacotron":
         model = MyModel(num_chars=num_chars,
