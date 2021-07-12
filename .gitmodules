@@ -1,0 +1,3 @@
+[submodule "WaveRNN"]
+	path = WaveRNN
+	url = https://github.com/marzus555/WaveRNN.git
